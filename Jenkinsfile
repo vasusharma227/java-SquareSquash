@@ -40,8 +40,4 @@ java -version
     }
 
   }
-  environment {
-    var = '2'
-    char = '4'
-  }
 }
