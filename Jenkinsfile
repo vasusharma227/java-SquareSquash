@@ -22,7 +22,7 @@ java -version'''
 
     stage('compile') {
       steps {
-        sh 'mvn compile test package'
+        sh 'echo "hello"'
       }
     }
 
