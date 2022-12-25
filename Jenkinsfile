@@ -7,7 +7,7 @@ pipeline {
           agent any
           steps {
             node(label: 'testing') {
-              sh '''mvn -version
+              sh '''mvn --version
 git --version
 java -version
 '''
