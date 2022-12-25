@@ -28,7 +28,7 @@ java -version
     stage('Build with maven') {
       agent any
       steps {
-        sh 'mvn compile test package'
+        sh 'echo "hello"'
       }
     }
 
