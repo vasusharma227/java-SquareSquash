@@ -1,44 +1,41 @@
 pipeline {
   agent any
   stages {
-    stage('build') {
-      agent any
-      steps {
-        node(label: 'testing') {
-          sh 'echo "testing build branch"'
+    stage('Log tool version') {
+      parallel {
+        stage('Log tool version') {
+          agent any
+          steps {
+            node(label: 'testing') {
+              sh '''mvn --version
+git --version
+java -version
+'''
+            }
+
+          }
+        }
+
+        stage('Check for POM') {
+          steps {
+            fileExists 'POM.xml'
+          }
         }
 
       }
     }
 
-    stage('maintain') {
+    stage('Build with maven') {
       agent any
       steps {
-        sh 'echo "maintain testing"'
+        sh 'mvn compile test package'
       }
     }
 
-    stage('compile') {
+    stage('post build steps') {
       agent any
       steps {
-        sh 'echo "hello"'
-      }
-    }
-
-    stage('analyse') {
-      agent any
-      steps {
-        build(job: 'java-SquareSquash', quietPeriod: 2)
-      }
-    }
-
-    stage('done') {
-      agent any
-      steps {
-        node(label: 'testing') {
-          sh 'echo "heloo done"'
-        }
-
+        writeFile(file: 'status.txt', text: 'hey it worked!')
       }
     }
 
